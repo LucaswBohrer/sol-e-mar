@@ -17,6 +17,7 @@ uniform vec2 u_mouse;
 uniform vec2 u_sun;
 uniform float u_night;
 uniform float u_psyche;
+uniform float u_hue;
 uniform vec4 u_ripples[8];
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
@@ -106,11 +107,22 @@ void main() {
     col += sunCol * exp(-abs(uv.y - horizon) * 90.0) * 0.5 * (1.0 - u_night * 0.5);
   }
 
-  // ---- psychedelic hue-shift (ONDA lab toggle) ----
+  // ---- psychedelic hue-shift (ONDA lab toggle) — stronger in v3 ----
   if (u_psyche > 0.01) {
     vec3 shifted = iq(uv.x * 0.8 + uv.y * 0.6 + u_time * 0.06);
-    col = mix(col, shifted * (0.55 + 0.45 * length(col)), u_psyche * 0.65);
-    col *= 1.0 + u_psyche * 0.25 * sin(uv.y * 28.0 + u_time * 3.0);
+    col = mix(col, shifted * (0.55 + 0.45 * length(col)), u_psyche * 0.85);
+    col *= 1.0 + u_psyche * 0.4 * sin(uv.y * 28.0 + u_time * 3.0);
+  }
+
+  // ---- global hue trip (HueTrip dial): rotate the whole ocean's hue ----
+  if (abs(u_hue) > 0.5) {
+    float a = radians(u_hue);
+    mat3 rot = mat3(
+      0.299 + 0.701 * cos(a) + 0.168 * sin(a), 0.587 - 0.587 * cos(a) + 0.330 * sin(a), 0.114 - 0.114 * cos(a) - 0.497 * sin(a),
+      0.299 - 0.299 * cos(a) - 0.328 * sin(a), 0.587 + 0.413 * cos(a) + 0.035 * sin(a), 0.114 - 0.114 * cos(a) + 0.292 * sin(a),
+      0.299 - 0.300 * cos(a) + 1.250 * sin(a), 0.587 - 0.588 * cos(a) - 1.050 * sin(a), 0.114 + 0.886 * cos(a) - 0.203 * sin(a)
+    );
+    col = clamp(rot * col, 0.0, 1.0);
   }
 
   // vignette
@@ -132,6 +144,7 @@ export function OceanShader({ journey }: { journey: Journey }) {
     sun: { x: 0.5, y: 0.6 },
     night: 0,
     psyche: 0,
+    hue: 0,
     ripples: [] as Ripple[],
     reduce: false,
   });
@@ -147,6 +160,9 @@ export function OceanShader({ journey }: { journey: Journey }) {
   });
   useMotionValueEvent(journey.psyche, "change", (v) => {
     stateRef.current.psyche = v;
+  });
+  useMotionValueEvent(journey.hue, "change", (v) => {
+    stateRef.current.hue = v;
   });
 
   useEffect(() => {
@@ -212,6 +228,7 @@ export function OceanShader({ journey }: { journey: Journey }) {
       sun: gl.getUniformLocation(prog, "u_sun"),
       night: gl.getUniformLocation(prog, "u_night"),
       psyche: gl.getUniformLocation(prog, "u_psyche"),
+      hue: gl.getUniformLocation(prog, "u_hue"),
       ripples: gl.getUniformLocation(prog, "u_ripples"),
     };
 
@@ -269,6 +286,7 @@ export function OceanShader({ journey }: { journey: Journey }) {
       gl!.uniform2f(U.sun, st.sun.x, st.sun.y);
       gl!.uniform1f(U.night, st.night);
       gl!.uniform1f(U.psyche, st.psyche);
+      gl!.uniform1f(U.hue, st.hue);
       gl!.uniform4fv(U.ripples, rippleData);
       gl!.drawArrays(0x0004 /* TRIANGLES */, 0, 3);
       if (!st.reduce) raf = requestAnimationFrame(frame);

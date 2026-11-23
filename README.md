@@ -1,10 +1,10 @@
-# SOL & MAR — v2
+# SOL & MAR — v3
 
-> **Uma viagem, não uma página. A scroll journey through one day at the shore.**
+> **Uma viagem, não uma página. A scroll journey through one day at the shore — now deeper, trippier, louder.**
 
-Where the sun meets the sea. SOL & MAR v2 is one continuous journey: a living GLSL ocean behind everything, a sun that travels the sky as you scroll (dawn → noon → golden hour → dusk → bioluminescent night), and three full-screen instruments you play with your hands. Built as a professional portfolio piece, not a template.
+Where the sun meets the sea. SOL & MAR v3 keeps everything from v2 (living GLSL ocean, sun that travels the sky as you scroll, three full-screen labs MARÉ/SOL/ONDA, kinetic type, manifesto) and goes further down: a dive tunnel, a live kaleidoscope, a night aurora you stir with your finger, a sea of living plankton, a hue-trip dial that recolours the whole site, and a type-it-and-it-becomes-a-wave toy.
 
-v1 was a SKY & BLOOM sibling with different colours — and was rejected for exactly that. v2 was rebuilt from scratch: no card grid, no modals, no editorial About, no playground stations.
+v1 was a SKY & BLOOM sibling with different colours — and was rejected for exactly that. v2 was rebuilt from scratch: no card grid, no modals, no editorial About, no playground stations. v3 adds five new full-screen interactive sections on top of v2, without removing any of it.
 
 **Live:** https://sol-e-mar-zeta.vercel.app
 **Repo:** https://github.com/LucaswBohrer/sol-e-mar

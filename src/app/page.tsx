@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import {
   motion,
+  useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
   useScroll,
@@ -18,15 +19,21 @@ import { VelocityMarquee } from "@/components/journey/VelocityMarquee";
 import { TideLab } from "@/components/journey/TideLab";
 import { SunLab } from "@/components/journey/SunLab";
 import { WaveLab } from "@/components/journey/WaveLab";
+import { DiveTunnel } from "@/components/journey/DiveTunnel";
+import { Kaleidoscope } from "@/components/journey/Kaleidoscope";
+import { AuroraSea } from "@/components/journey/AuroraSea";
+import { PlanktonSea } from "@/components/journey/PlanktonSea";
+import { HueTrip } from "@/components/journey/HueTrip";
+import { TypeWave } from "@/components/journey/TypeWave";
 import { Manifesto } from "@/components/journey/Manifesto";
 import { TopBar } from "@/components/journey/TopBar";
 import { Footer } from "@/components/journey/Footer";
 import { phaseFor, type Journey } from "@/lib/journey";
 
-/** SOL & MAR v2 — "uma viagem, não uma página".
- *  One scroll journey: the shader ocean is the fixed world, the sun travels
- *  across the sky as you scroll (dawn → noon → golden hour → dusk → night),
- *  and three full-screen labs are instruments you play, not cards you read. */
+/** SOL & MAR v3 — "uma viagem, não uma página", agora mais funda.
+ *  v2: shader ocean, day-cycle, 3 labs, kinetic type, manifesto.
+ *  v3 ADDS: dive tunnel, kaleidoscope, aurora, living plankton, a global
+ *  hue-trip dial that recolours the whole site, and a type-into-wave toy. */
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -41,8 +48,12 @@ export default function Home() {
   const sunY = useTransform(smooth, [0, 0.25, 0.5, 0.75, 1], [0.58, 0.85, 0.62, 0.56, 0.72]);
   const night = useTransform(smooth, [0.72, 0.95], [0, 1]);
   const psyche = useMotionValue(0);
+  const hue = useMotionValue(0);
+  // the HueTrip dial recolours the whole page (DOM side); the shader,
+  // aurora and plankton read journey.hue directly in their own loops.
+  const hueFilter = useMotionTemplate`hue-rotate(${hue}deg)`;
 
-  const journey: Journey = { progress: smooth, velocity, sunX, sunY, night, psyche };
+  const journey: Journey = { progress: smooth, velocity, sunX, sunY, night, psyche, hue };
 
   const [phase, setPhase] = useState(phaseFor(0));
   const phaseRef = useRef(phase.label);
@@ -69,7 +80,7 @@ export default function Home() {
       <OceanShader journey={journey} />
       <RippleLayer />
       <TopBar phase={phase.label} time={phase.time} />
-      <main ref={mainRef} className="relative z-10">
+      <motion.main ref={mainRef} style={{ filter: hueFilter }} className="relative z-10">
         {/* HERO — the shader is the world; the type is the only furniture */}
         <section
           id="top"
@@ -113,9 +124,15 @@ export default function Home() {
         <TideLab />
         <SunLab />
         <WaveLab journey={journey} />
+        <DiveTunnel />
+        <Kaleidoscope journey={journey} />
+        <AuroraSea journey={journey} />
+        <PlanktonSea journey={journey} />
+        <HueTrip journey={journey} />
+        <TypeWave journey={journey} />
         <Manifesto />
         <Footer />
-      </main>
+      </motion.main>
     </>
   );
 }

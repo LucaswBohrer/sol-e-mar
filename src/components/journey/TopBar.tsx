@@ -6,7 +6,11 @@ const LINKS = [
   { label: "Maré", href: "#mare" },
   { label: "Sol", href: "#sol" },
   { label: "Onda", href: "#onda" },
-  { label: "Manifesto", href: "#manifesto" },
+  { label: "Caleido", href: "#caleidoscopio" },
+  { label: "Aurora", href: "#aurora" },
+  { label: "Plâncton", href: "#plancton" },
+  { label: "Cor", href: "#cor" },
+  { label: "Digita", href: "#digita" },
 ] as const;
 
 /** Floating minimal top bar — replaces the old navbar. Shows the live phase
@@ -25,7 +29,7 @@ export function TopBar({ phase, time }: { phase: string; time: string }) {
           <span className="inline-block size-2 animate-pulse rounded-full bg-sun" aria-hidden="true" />
           {phase} · {time}
         </p>
-        <nav aria-label="Seções da viagem" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Seções da viagem" className="hidden items-center gap-1 lg:flex">
           {LINKS.map((l) => (
             <a
               key={l.href}

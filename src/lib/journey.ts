@@ -15,6 +15,9 @@ export type Journey = {
   night: MotionValue<number>;
   /** 0 = natural, 1 = full psychedelic hue-shift. Driven by the ONDA lab. */
   psyche: MotionValue<number>;
+  /** Global hue rotation in degrees (0–359). Driven by the HueTrip dial;
+   *  the shader, aurora, plankton and the <main> filter all follow it. */
+  hue: MotionValue<number>;
 };
 
 export const PHASES = [
