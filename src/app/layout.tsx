@@ -23,36 +23,36 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sol-e-mar.vercel.app"),
-  title: "SOL & MAR — Onde o sol encontra o mar",
+  metadataBase: new URL("https://sol-e-mar-zeta.vercel.app"),
+  title: "SOL & MAR — uma viagem, não uma página",
   description:
-    "An immersive creative web experience about sun, sea, waves and golden hour. Sol & Mar is a living shoreline — floating light, moving water and motion you can actually touch.",
-  keywords: ["creative web", "interactive design", "motion", "three.js", "portfolio", "sol e mar", "sunset", "ocean"],
+    "An immersive scroll journey through one day at the shore: a living GLSL ocean, a sun you drag across the sky, a tide you raise with your finger, and waves you play like an instrument.",
+  keywords: ["creative web", "interactive design", "motion design", "webgl", "shader", "sol e mar", "sunset", "ocean"],
   authors: [{ name: "SOL & MAR" }],
   icons: { icon: "/favicon.svg" },
   openGraph: {
-    title: "SOL & MAR — Onde o sol encontra o mar",
-    description: "Where the sun meets the sea. An immersive creative web experience.",
+    title: "SOL & MAR — uma viagem, não uma página",
+    description: "The sun travels, the tide answers, the waves play. A scroll journey, not a page.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SOL & MAR — Onde o sol encontra o mar",
-    description: "Where the sun meets the sea. An immersive creative web experience.",
+    title: "SOL & MAR — uma viagem, não uma página",
+    description: "The sun travels, the tide answers, the waves play. A scroll journey, not a page.",
   },
 };
 
 export const viewport = {
-  themeColor: "#E8F4FC",
+  themeColor: "#04101F",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       className={`${spaceGrotesk.variable} ${inter.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-foam font-body text-ink">{children}</body>
+      <body className="min-h-full bg-night font-body text-foam">{children}</body>
     </html>
   );
 }

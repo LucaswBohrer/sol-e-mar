@@ -4,11 +4,14 @@
   --color-sun: #ffc93c;
   --color-sun-soft: #ffd166;
   --color-amber: #ff9f1c;
+  --color-ember: #ff6e28;
+  --color-electric: #2e9bff;
   --color-sea: #0e5a8a;
   --color-sky: #4db2e8;
   --color-sky-soft: #7cc8f0;
   --color-deep: #062a44;
-  --color-deep-dark: #041e33;
+  --color-night: #04101f;
+  --color-abyss: #02070f;
   --color-ice: #e8f4fc;
   --color-sand: #f6e7c1;
   --color-foam: #f8fcff;
@@ -24,8 +27,8 @@ html {
 }
 
 body {
-  background: #f8fcff;
-  color: var(--color-ink);
+  background: #04101f;
+  color: #f8fcff;
   font-family: var(--font-body);
   overflow-x: hidden;
 }
@@ -36,7 +39,7 @@ body {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-amber);
+  outline: 3px solid var(--color-sun);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -45,45 +48,33 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-ice);
+  background: #02070f;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(var(--color-sky), var(--color-sun));
   border-radius: 8px;
 }
 
-/* Organic wave shapes */
-.blob {
-  border-radius: 58% 42% 55% 45% / 48% 55% 45% 52%;
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-}
-
 .text-balance {
   text-wrap: balance;
 }
 
-/* Outlined display text (hero accent) */
-.text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--color-deep);
-}
-
-/* Sun-to-sea gradient text */
-.text-gradient {
-  background: linear-gradient(100deg, var(--color-amber) 5%, var(--color-sun) 35%, var(--color-sky) 65%, var(--color-sea) 100%);
+/* Hot neon sun gradient text */
+.text-gradient-sun {
+  background: linear-gradient(100deg, #ff6e28 0%, #ff9f1c 25%, #ffc93c 50%, #ffe98a 75%, #7cc8f0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Marquee strip */
-@keyframes marquee {
+/* Outlined display text on the dark sea */
+.text-outline-light {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(248, 252, 255, 0.55);
+}
+
+/* Drifting wave edge (tide lab) */
+@keyframes wave-drift {
   from {
     transform: translateX(0);
   }
@@ -91,14 +82,47 @@ body {
     transform: translateX(-50%);
   }
 }
-.animate-marquee {
-  animation: marquee 36s linear infinite;
-}
-.animate-marquee:hover {
-  animation-play-state: paused;
+.wave-drift {
+  animation: wave-drift 7s linear infinite;
 }
 
-/* Extremely subtle film grain for depth (used sparingly, low opacity) */
+/* Sun-styled range inputs (labs) */
+.range-sun {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0e5a8a, #4db2e8, #ffc93c, #ff9f1c);
+  outline-offset: 4px;
+  cursor: pointer;
+}
+.range-sun::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: #ffc93c;
+  border: 3px solid #04101f;
+  box-shadow: 0 0 0 2px rgba(255, 201, 60, 0.6), 0 0 22px rgba(255, 201, 60, 0.7);
+  cursor: grab;
+}
+.range-sun::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: #ffc93c;
+  border: 3px solid #04101f;
+  box-shadow: 0 0 0 2px rgba(255, 201, 60, 0.6), 0 0 22px rgba(255, 201, 60, 0.7);
+  cursor: grab;
+}
+.range-sun::-moz-range-track {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0e5a8a, #4db2e8, #ffc93c, #ff9f1c);
+}
+
+/* Film grain for depth */
 .grain::after {
   content: "";
   position: absolute;
@@ -118,5 +142,8 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .wave-drift {
+    animation: none !important;
   }
 }
